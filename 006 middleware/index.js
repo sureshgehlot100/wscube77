@@ -10,10 +10,10 @@ const checkToken = (req, res, next) => {
 
    if(!userToken){
 
-    res.status(400).Json({msg:"plz Add token"});
+    res.status(400).json({msg:"plz Add token"});
    }
    else if(userToken !=token){
-    res.status(401).Json({msg:"invaild token"})
+    res.status(401).json({msg:"invaild token"})
    }
    else{
     next();

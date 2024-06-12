@@ -31,7 +31,7 @@ const upload = multer({ storage: multerStorage }).single('thumbnail');
 
 app.use('/uploads', express.static('uploads'));
 
-app.post('/insert_single_files', upload, async (req, res) => {
+app.post('/insert_single_files', upload , async (req, res) => {
     try {
 
         const { name } = req.body;
@@ -66,7 +66,7 @@ app.get('/read_data', async (req, res) => {
 
     res.status(200).json({ message: 'data fetched successfully', data:dataWithPath});
 
-    console.log(`${req.protocol}://${req.get('host')}/uploads/`);
+    console.log(`${req.protocol}://${req.get('host')}/uploads`);
 
 });
 

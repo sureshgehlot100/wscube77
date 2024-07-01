@@ -1,6 +1,6 @@
 const Course = require("../../models/course/course");
 
- addCourses = async (req, res) => {
+const addCourses = async (req, res) => {
     try {
         const courseData = req.body;
 

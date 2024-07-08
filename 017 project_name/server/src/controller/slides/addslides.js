@@ -10,7 +10,6 @@ const addSlides = async (req, res) => {
 
         const response = await data.save();
         
-        console.log(addSlidesData)
 
         res.status(200).json({ message: 'course added successfully ',data:response  });
 

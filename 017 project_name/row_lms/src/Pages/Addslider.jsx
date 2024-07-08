@@ -5,32 +5,59 @@ import Sidebar from '../Common/Sidebar';
 import Footer from '../Common/Footer';
 import prev from '../img/generic-image-file-icon-hi.png'
 import axios from 'axios';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 function Addslider() {
   const nav = useNavigate();
+  const params = useParams();
+  const [data, setData] = useState({});
   let { changemenu } = useContext(mainContext);
+
+  const fetchData = async (id) => {
+    const response = await axios.get(`http://localhost:5500/course/fetch_slides_with_id/${id}`);
+    const oldaData = (response.data.data);
+    oldaData.status = oldaData.status.toString();
+    setData(oldaData);
+  };
+
+  useEffect(() => {
+    if (params._id) {
+      fetchData(params._id);
+    }
+  }, []);
+
   const handleAddSlides = async (e) => {
     e.preventDefault();
     const form = e.target;
 
     const formData = new FormData(form);
     console.log(formData)
+    if (params._id){
+      try {
+        const response = await axios.put(`http//localhost:5500/slides/update_slides/${params._id}`,formData);
+        if (response.status !== 200) return alert('something went wrong');
 
-    const response = await axios.post('http://localhost:5500/slides/add_slides', formData, {});
+        nav('/viewcourse');
 
-    if (response.status != 200) return alert('something went wrong');
-
-    nav('/viewslider');
-
-    try {
-
-    } catch (error) {
-      console.log(error);
-      alert('something went wrong');
-
+      } catch (error) {
+        console.log(error);
+        alert('sometyhing went wrong');  
+      }
     }
-
+    else{
+      try {
+        const response = await axios.post('http://localhost:5500/slides/add_slides', formData, {});
+  
+        if (response.status !== 200) return alert('something went wrong');
+    
+        nav('/viewslider');
+  
+      } catch (error) {
+        console.log(error);
+        alert('something went wrong');
+  
+      }
+    }
   };
   return (
     <div>
@@ -64,7 +91,7 @@ function Addslider() {
                   </div>
                 </div>
                 Slider Description
-                <textarea name=" slidesdes" id="" className='border px-4 pt-3 border-gray-400 my-2 w-full h-[100px]' cols="30" rows="10"></textarea>
+                <textarea name="slidesdes" id="" className='border px-4 pt-3 border-gray-400 my-2 w-full h-[100px]' cols="30" rows="10"></textarea>
                 Slider Stauts
                 <div className='flex items-center mt-5  mb-8 gap-2'>
                   <input type="radio" value={true} name='status' className='mx-2 w-[20px] h-[20px] text-[20px]' /> Active

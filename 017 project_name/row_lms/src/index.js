@@ -28,11 +28,11 @@ const router = createBrowserRouter([
     element:<Dashboard/>
   },
   {
-    path:"addcourse",
+    path:"addcourse/:_id?",
     element:<Addcourse/>
   },
   {
-    path:"addslider",
+    path:"addslider/:_id?",
     element:<Addslider/>
   },
   {

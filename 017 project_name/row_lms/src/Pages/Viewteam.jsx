@@ -1,55 +1,104 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { mainContext } from '../Context';
 import Header from '../Common/Header';
 import Sidebar from '../Common/Sidebar';
 import Footer from '../Common/Footer';
+import axios from 'axios';
 
 function Viewteam() {
-  let {changemenu} = useContext(mainContext);
+  let { changemenu } = useContext(mainContext);
+  const [teamsData, setTeamsData] = useState([]);
+  const [filepath, setfilePath] = useState('');
+
+  const handlefetchedTeams = async (req, res) => {
+    try {
+      const response = await axios.get('http://localhost:5500/teams/read_teams');
+      console.log(response);
+      if (response.status !== 200) return alert('something went wrong');
+
+      setfilePath(response.data.filePath);
+      console.log(setfilePath);
+      setTeamsData(response.data.data);
+      console.log(setTeamsData);
+
+    } catch (error) {
+      console.log(error);
+
+    }
+
+  };
+  useEffect(() => {
+    handlefetchedTeams();
+
+  }, []);
+  const handleSigleteamsdelete = async (e) => {
+    if (!window.confirm('Are you sure to delete')) return;
+    console.log(e.target.value);
+    try {
+      const response = await axios.delete(`http://localhost:5500/teams/delete_single_teams/${e.target.value}`);
+      
+      if (response.status !== 200) return alert('something went wrong');
+      alert('slides deleted successfully');
+      handlefetchedTeams();
+
+    } catch (error) {
+      console.log(error);
+      alert('somethings went wrong');
+    }
+
+  };
+
+
   return (
+
+
     <div>
 
-<Header/>
-    
-    <div className='flex  bg-[#F5F7FF]'>
-      <Sidebar/>
-      
-      <div className={` ${changemenu==true ? 'w-[95%]':'w-[84%]'} relative px-[30px] py-[50px] h-[92vh] bg-[#F5F7FF]`}>
+      <Header />
 
-        <h1 className='text-[25px] font-[500] mb-[10px]'>
-        Team Table
-        </h1>
-        <div className=''>
-        <div className='bg-white w-[100%] mb-[50px] p-4 h-full rounded-[20px]'>
-          <table >
-            <tr>
-              <th>S.no</th>
-              <th>Member Name</th>
-              <th>Category</th>
-              <th>Member Image</th>
-              <th>Status</th>
-              <th>Action</th>
-            </tr>
-            <tr>
-              <td>1</td>
-              <td>React</td>
-              <td>1 month</td>
-              <td>React.png</td>
-              <td>1</td>
-              <td className='text-center'>
+      <div className='flex  bg-[#F5F7FF]'>
+        <Sidebar />
 
-              <button className='bg-green-500 text-white px-5 mr-5 py-1'>Edit</button>
-              <button className='bg-red-400 text-white px-5 py-1'>Delete</button>
+        <div className={` ${changemenu == true ? 'w-[95%]' : 'w-[84%]'} relative px-[30px] py-[50px] h-[92vh] bg-[#F5F7FF]`}>
 
+          <h1 className='text-[25px] font-[500] mb-[10px]'>
+            Team Table
+          </h1>
+          <div className=''>
+            <div className='bg-white w-[100%] mb-[50px] p-4 h-full rounded-[20px]'>
+              <table >
+                <tr>
+                  <th>S.no</th>
+                  <th>Member Name</th>
+                  <th>Category</th>
+                  <th>Member Image</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+                {
+                  teamsData.map((teams, i) => {
+                    return (
+                      <tr>
+                        <td>{i + 1}</td>
+                        <td>{teams.teamsmembername}</td>
+                        <td>{teams.teamsCat}</td>
+                        <td> <img src={filepath + teams.thumbnail} alt="" className='w-[100px]' /></td>
+                        <td>{i + 1}</td>
+                        <td className='text-center'>
+                          <button className='bg-green-500 text-white px-5 mr-5 py-1'>Edit</button>
+                          <button value={teams._id} className='bg-red-400 text-white px-5 py-1' onClick={handleSigleteamsdelete}>Delete</button>
+                        </td>
+                      </tr>
+                    )
+                  })
+                }
 
-              </td>
-            </tr>
-          </table>
+              </table>
+            </div>
+          </div>
+          <Footer />
         </div>
-        </div>
-      <Footer/>
       </div>
-    </div>
 
     </div>
   )

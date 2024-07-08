@@ -1,8 +1,10 @@
 
 const express = require ('express');
 const adminRoutes = require('./routes/admin/adminRoutes');
-const courseRoutes = require('./routes/course/addCourses');
-const slidesRoutes = require('./routes/slides/addslide');
+const courseRoutes = require('./routes/course/Courses');
+const slidesRoutes = require('./routes/slides/slide');
+const TeamsRoutes = require('./routes/Team/Team');
+
 require('./db/config');
 
 const allRoutes = express.Router();
@@ -10,5 +12,6 @@ const allRoutes = express.Router();
 allRoutes.use('/admin',adminRoutes);
 allRoutes.use('/course',courseRoutes);
 allRoutes.use('/slides',slidesRoutes);
+allRoutes.use('/teams',TeamsRoutes);
 
 module.exports=allRoutes;

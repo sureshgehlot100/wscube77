@@ -5,9 +5,12 @@ import Sidebar from '../Common/Sidebar';
 import Footer from '../Common/Footer';
 import { useEffect } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 
 function Viewcourse() {
+   const nav = useNavigate();
+
   let { changemenu } = useContext(mainContext);
   const [courseData, setcourseData] = useState([]);
   const [filePath, setfilePath] = useState('');
@@ -15,7 +18,7 @@ function Viewcourse() {
   const handlefetchCourse = async () => {
     try {
       const response = await axios.get('http://localhost:5500/course/read_courses');
-      if (response.status != 200) return alert('something went wrong');
+      if (response.status !== 200) return alert('something went wrong');
 
       setfilePath(response.data.filePath);
 
@@ -46,6 +49,28 @@ function Viewcourse() {
     handlefetchCourse();
 
   };
+  const handleUpdate =async(e)=>{
+    nav(`/addcourse/${e.target.value}`);
+
+  };
+  const handleDelete =async (e)=>{
+    
+    if (!window.confirm('Are you sure to delete')) return;
+    
+    try {
+      const response = await axios.delete(`http://localhost:5500/course/delete_single_course/${e.target.value}`);
+      console.log(response);
+      if (response.status !== 200) return alert('Something went wrong');
+
+      alert('Course deleted successfully');
+      handlefetchCourse();
+    }
+    catch(err){
+      console.log(err);
+      alert('Something Went wrong');
+    }
+    
+  }
   return (
     <div>
 
@@ -91,8 +116,8 @@ function Viewcourse() {
                         </td>
                         <td className='text-center'>
 
-                          <button className='bg-green-500 text-white px-5 mr-5 py-1'>Edit</button>
-                          <button className='bg-red-400 text-white px-5 py-1'>Delete</button>
+                          <button value={course._id} className='bg-green-500 text-white px-5 mr-5 py-1'onClick={handleUpdate}>Edit</button>
+                          <button value={course._id} className='bg-red-400 text-white px-5 py-1'onClick={handleDelete}>Delete</button>
 
                         </td>
                       </tr>

@@ -1,15 +1,13 @@
-const Teams = require("../../models/team/team");
 
-const readSingleteams = async(req,res)=>{
+const readSingleTeams = async (req, res) => {
     try {
-         const response = await Teams.find();
-         const filePath = `${req.protocol}://${req.get('host')}/uploads/`;
-        res.status(200).json({message:'data feched successfully',data: response, filePath });
-        
+        console.log(req.params);
+        res.status(200).json({ message: 'data fetched successfully' });
+
     } catch (error) {
         console.log(error);
-        res.status(500).json({message:'internal server error'});
-        
+        res.status(500).json({ message: 'internal server error' })
+
     }
 };
-module.exports = readSingleteams;
+module.exports = readSingleTeams;

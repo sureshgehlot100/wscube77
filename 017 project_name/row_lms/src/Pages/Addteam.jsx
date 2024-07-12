@@ -1,15 +1,30 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { mainContext } from '../Context';
 import Header from '../Common/Header';
 import Sidebar from '../Common/Sidebar';
 import Footer from '../Common/Footer';
 import prev from '../img/generic-image-file-icon-hi.png'
 import axios from 'axios';
-import { useNavigate } from 'react-router';
+import { useNavigate, useParams } from 'react-router';
 
 function Addteam() {
   const nav = useNavigate();
+  const params = useParams();
   let { changemenu } = useContext(mainContext);
+
+  const fetchData = async(id)=>{
+   
+      const response = await axios.get(`http://localhost:5500/teams/fetch_data_with_id/${id}`);
+      console.log(response);
+      
+   
+  };
+  useEffect(() => {
+    if (params._id) {
+      fetchData(params._id);
+    }
+  }, []);
+
 
   const handleaddTeam = async (e) => {
     e.preventDefault();

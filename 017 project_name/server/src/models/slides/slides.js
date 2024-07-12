@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const addSlidesSchema = new mongoose.Schema({
     slidesheading: String,
-    slidessubheading:String,
+    slidessubheading: String,
     slidesdes: String,
     thumbnail: String,
     status: {

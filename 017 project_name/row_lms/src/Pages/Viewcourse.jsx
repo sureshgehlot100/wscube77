@@ -9,11 +9,12 @@ import { useNavigate } from 'react-router';
 
 
 function Viewcourse() {
-   const nav = useNavigate();
+  const nav = useNavigate();
 
   let { changemenu } = useContext(mainContext);
   const [courseData, setcourseData] = useState([]);
   const [filePath, setfilePath] = useState('');
+  const [checked, SetChecked] = useState([]);
 
   const handlefetchCourse = async () => {
     try {
@@ -49,14 +50,14 @@ function Viewcourse() {
     handlefetchCourse();
 
   };
-  const handleUpdate =async(e)=>{
+  const handleUpdate = async (e) => {
     nav(`/addcourse/${e.target.value}`);
 
   };
-  const handleDelete =async (e)=>{
-    
+  const handleDelete = async (e) => {
+
     if (!window.confirm('Are you sure to delete')) return;
-    
+
     try {
       const response = await axios.delete(`http://localhost:5500/course/delete_single_course/${e.target.value}`);
       console.log(response);
@@ -65,11 +66,41 @@ function Viewcourse() {
       alert('Course deleted successfully');
       handlefetchCourse();
     }
-    catch(err){
+    catch (err) {
       console.log(err);
       alert('Something Went wrong');
     }
-    
+
+  };
+  const handleCheckInput = async (e) => {
+    console.log(e.target.value);
+    console.log(e.target.checked);
+    if (e.target.checked) {
+      const newArr = [...checked, e.target.value];
+      SetChecked(newArr);
+
+    }
+    else {
+      const newArr = [...checked];
+      const currentIndex = newArr.findIndex((item) => item === e.target.value);
+      newArr.splice(currentIndex, 1);
+      console.log(currentIndex);
+      SetChecked(newArr);
+    }
+  };
+  const handleMultiDelete = async () => {
+    if (!window.confirm('Are you sure to delete')) return;
+    try {
+      const response = axios.delete('http://localhost:5500/course/multi_delete', { data: checked });
+
+      if (response.status !== 200) return alert('Something went Wrong');
+      handlefetchCourse();
+    } catch (error) {
+      console.log(error);
+      alert('Something went Wrong');
+
+    }
+
   }
   return (
     <div>
@@ -89,6 +120,10 @@ function Viewcourse() {
               <table >
                 <tr>
                   <th>S.no</th>
+                  <th>
+                    <input type="checkbox"></input>
+                    <button className='bg-[red] p-[6px_10px] rounded text-[white]' onClick={handleMultiDelete}>Delete</button>
+                  </th>
                   <th>Course Name</th>
                   <th>Fees</th>
                   <th>Duration</th>
@@ -102,6 +137,9 @@ function Viewcourse() {
                     return (
                       <tr>
                         <td>{i + 1}</td>
+                        <td>
+                          <input type="checkbox" value={course._id} onClick={handleCheckInput} ></input>
+                        </td>
                         <td>{course.coursename}</td>
                         <td>{course.courseprice
                         }</td>
@@ -112,12 +150,12 @@ function Viewcourse() {
                           <img src={filePath + course.thumbnail} alt="" className='w-[100px]' />
                         </td>
                         <td>
-                        <button value={course._id} onClick={handleStatus} className={`p-[4px_8px] ${((course.status) ? 'bg-[green]' : 'bg-[red]')} rounded text-[white]`}>{(course.status) ? 'Active' : 'Inactive'}</button>
+                          <button value={course._id} onClick={handleStatus} className={`p-[4px_8px] ${((course.status) ? 'bg-[green]' : 'bg-[red]')} rounded text-[white]`}>{(course.status) ? 'Active' : 'Inactive'}</button>
                         </td>
                         <td className='text-center'>
 
-                          <button value={course._id} className='bg-green-500 text-white px-5 mr-5 py-1'onClick={handleUpdate}>Edit</button>
-                          <button value={course._id} className='bg-red-400 text-white px-5 py-1'onClick={handleDelete}>Delete</button>
+                          <button value={course._id} className='bg-green-500 text-white px-5 mr-5 py-1' onClick={handleUpdate}>Edit</button>
+                          <button value={course._id} className='bg-red-400 text-white px-5 py-1' onClick={handleDelete}>Delete</button>
 
                         </td>
                       </tr>

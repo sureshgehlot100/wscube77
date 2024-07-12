@@ -4,8 +4,10 @@ import Header from '../Common/Header';
 import Sidebar from '../Common/Sidebar';
 import Footer from '../Common/Footer';
 import axios from 'axios';
+import { useNavigate } from 'react-router';
 
 function Viewteam() {
+  const nav = useNavigate()
   let { changemenu } = useContext(mainContext);
   const [teamsData, setTeamsData] = useState([]);
   const [filepath, setfilePath] = useState('');
@@ -36,7 +38,7 @@ function Viewteam() {
     console.log(e.target.value);
     try {
       const response = await axios.delete(`http://localhost:5500/teams/delete_single_teams/${e.target.value}`);
-      
+
       if (response.status !== 200) return alert('something went wrong');
       alert('slides deleted successfully');
       handlefetchedTeams();
@@ -47,6 +49,10 @@ function Viewteam() {
     }
 
   };
+  const handleUpdate = async (e) => {
+    nav(`/addteam/${e.target.value}`);
+
+  }
 
 
   return (
@@ -85,7 +91,7 @@ function Viewteam() {
                         <td> <img src={filepath + teams.thumbnail} alt="" className='w-[100px]' /></td>
                         <td>{i + 1}</td>
                         <td className='text-center'>
-                          <button className='bg-green-500 text-white px-5 mr-5 py-1'>Edit</button>
+                          <button value={teams._id} onClick={handleUpdate} className='bg-green-500 text-white px-5 mr-5 py-1'>Edit</button>
                           <button value={teams._id} className='bg-red-400 text-white px-5 py-1' onClick={handleSigleteamsdelete}>Delete</button>
                         </td>
                       </tr>

@@ -49,6 +49,18 @@ function Viewslider() {
     }
 
   };
+  const handleStatus = async (e) => {
+    const statusData = {
+      id: e.target.value,
+      Status: (e.target.textContent === 'Active') ? false : true
+    }
+    const response = await axios.put('http://localhost:5500/slides/change_slides_status', statusData, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+    handlefetchSlides();
+  };
   const handleUpdate = async(e)=>{
     nav(`/addslider/${e.target.value}`);
   }
@@ -89,7 +101,7 @@ function Viewslider() {
                         <td>
                           <img src={filepath + slides.thumbnail} alt="" className='w-[100px]' />
                         </td>
-                        <td>{i + 1}</td>
+                        <td><button value={slides._id} onClick={handleStatus} className={`p-[4px_8px] ${((slides.status) ? 'bg-[green]' : 'bg-[red]')} rounded text-[white]`}>{(slides.status) ? 'Active' : 'Inactive'}</button></td>
                         <td className='text-center'>
                           <button value={slides._id} onClick={handleUpdate} className='bg-green-500 text-white px-5 mr-5 py-1'>Edit</button>
                           <button value={slides._id} onClick={handlesingleslidesDelete} className='bg-red-400 text-white px-5 py-1'>Delete</button>

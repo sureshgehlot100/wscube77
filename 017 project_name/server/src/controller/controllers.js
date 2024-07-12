@@ -10,8 +10,16 @@ const deleteSingleCourse = require('./courses/deleteSingleCourse');
 const readSlides = require('./slides/readslides');
 const deleteSingleSlides = require('./slides/deleteSingleslides');
 const addTeams = require('./teams/addTeams');
-const readSingleteams = require('./teams/readSingleteams');
 const deleteSingleTeams = require('./teams/deleteSingleteams');
+const readteams = require('./teams/readteams');
+const readSingleslides = require('./slides/readsingleslides');
+const updateSlides = require('./slides/updateSlides');
+const changeSlidesStatus = require('./slides/changeSlidesStatus');
+const readSingleTeams = require('./teams/readSingleTeams');
+const deleteMultiCourse = require('./courses/deleteMulticourse');
+const trueCourses = require('./courses/trueCourses');
+const addVideo = require('./video/addVideo');
+const readVideo = require('./video/readvideo');
 
 module.exports = {
     registerAdmin,
@@ -23,9 +31,17 @@ module.exports = {
     readSingleCourse,
     updateCourse,
     deleteSingleCourse,
+    deleteMultiCourse,
+    trueCourses,
     readSlides,
+    readSingleslides,
     deleteSingleSlides,
     addTeams ,
-    readSingleteams,
-    deleteSingleTeams
+    readteams,
+    deleteSingleTeams,
+    updateSlides,
+    changeSlidesStatus,
+    readSingleTeams,
+    addVideo,
+    readVideo
 }

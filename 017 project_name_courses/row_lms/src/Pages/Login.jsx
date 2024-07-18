@@ -9,14 +9,14 @@ import Cookies from 'js-cookie'
 
 
 function Login() {
-   
+
   const nav = useNavigate();
 
   const IfAdminLoggedIn = () => {
     const ifAdmin = Cookies.get('admin');
 
-    console.log(ifAdmin );
-    if(ifAdmin){
+    console.log(ifAdmin);
+    if (ifAdmin) {
 
       nav('/dashboard');
 
@@ -24,31 +24,34 @@ function Login() {
   };
   useEffect(() => { IfAdminLoggedIn() }, [])
 
- 
+
 
   const [admindata, setAdmindata] = useState({});
   //  const manageAdminData = (e)=>{
   //   console.log(e.target.name,e.target.value);
 
-  const handleLogIn = async()=>{
+  const handleLogIn = async () => {
     const response = await fetch('http://localhost:5500/admin/login', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
       },
-      body:JSON.stringify(admindata)
+      body: JSON.stringify(admindata)
 
     });
     if (response.status === 200) {
       const data = await response.json();
-      console.log(data.data[0]);
+      // console.log(data.data);
+      // const dataToset = { ...data.data, auth: data.auth };
 
-      Cookies.set('admin',JSON.stringify(data.data[0]));
+      //  dataToset['auth'] = data.auth;
+
+      Cookies.set('admin', JSON.stringify({ ...data.data, auth: data.auth }));
 
       nav('/dashboard');
     }
     else {
-      alert("invalid credentials")
+      alert("invalid credentials");
     }
   };
 

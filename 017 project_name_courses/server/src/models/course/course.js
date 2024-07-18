@@ -12,12 +12,23 @@ const addcourseSchema = new mongoose.Schema({
     },
     created_at: {
         type: Date,
-        default: Date.now
+        // default: Date.now
     },
     updated_at: {
         type: Date
     }
 });
+
+addcourseSchema.pre('save', (next) => {
+    const currentDate = new Date();
+
+    if (!this.new) {
+        this.created_at = currentDate;
+
+    } else {
+        this.updated_at = currentDate;
+    }
+})
 
 const Course = mongoose.model('courses', addcourseSchema);
 

@@ -5,15 +5,24 @@ const courseRoutes = require('./routes/course/Courses');
 const slidesRoutes = require('./routes/slides/slide');
 const TeamsRoutes = require('./routes/Team/Team');
 const videoRoutes = require('./routes/Video/Video');
+const otpRouter = require('./routes/otp/otp');
+const userRoutes = require('./routes/user/user');
+const verifyJWT = require('./middleware/jwt/jwtVerify');
 
 require('./db/config');
 
 const allRoutes = express.Router();
+const verifyRoutes = express.Router();
+verifyRoutes.use(verifyJWT);
 
 allRoutes.use('/admin', adminRoutes);
-allRoutes.use('/course', courseRoutes);
+verifyRoutes.use('/course', courseRoutes);
 allRoutes.use('/slides', slidesRoutes);
 allRoutes.use('/teams', TeamsRoutes);
 allRoutes.use('/videos', videoRoutes);
+allRoutes.use('/otp', otpRouter);
+allRoutes.use('/user', userRoutes);
+
+allRoutes.use('/',verifyRoutes);
 
 module.exports = allRoutes;

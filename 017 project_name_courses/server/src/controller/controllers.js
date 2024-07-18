@@ -21,6 +21,8 @@ const trueCourses = require('./courses/trueCourses');
 const addVideo = require('./video/addVideo');
 const readVideo = require('./video/readvideo');
 const searchCourses = require('./courses/searchCourse');
+const generate_otp = require('./otp/generateOTP');
+const registerUser = require('./user/registerUser');
 
 module.exports = {
     registerAdmin,
@@ -45,5 +47,7 @@ module.exports = {
     changeSlidesStatus,
     readSingleTeams,
     addVideo,
-    readVideo
+    readVideo,
+    generate_otp,
+    registerUser
 }

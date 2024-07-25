@@ -71,6 +71,7 @@ function Viewcourse() {
         'Content-Type': 'application/json'
       }
     })
+    console.log(response);
     handlefetchCourse();
 
   };
@@ -115,7 +116,7 @@ function Viewcourse() {
   const handleMultiDelete = async () => {
     if (!window.confirm('Are you sure to delete')) return;
     try {
-      const response = axios.delete('http://localhost:5500/course/multi_delete', { data: checked }, {
+      const response = await axios.delete('http://localhost:5500/course/multi_delete', { data: checked }, {
         headers: {
           'Content-Type': 'application/json'
         }
@@ -181,7 +182,7 @@ function Viewcourse() {
       <div className='flex  bg-[#F5F7FF]'>
         <Sidebar />
 
-        <div className={` ${changemenu == true ? 'w-[95%]' : 'w-[84%]'} relative px-[30px] py-[50px] h-[92vh] bg-[#F5F7FF]`}>
+        <div className={` ${changemenu === true ? 'w-[95%]' : 'w-[84%]'} relative px-[30px] py-[50px] h-[92vh] bg-[#F5F7FF]`}>
 
           <h1 className='text-[25px] font-[500] mb-[10px]'>
             Course Table

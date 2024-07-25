@@ -17,6 +17,7 @@ function Addcourse() {
 
   const fetchData = async (id) => {
     const response = await axios.get(`http://localhost:5500/course/fetch_course_with_id/${id}`);
+    console.log(response);
     const oldaData = (response.data.data);
     oldaData.status = oldaData.status.toString();
     setData(oldaData);
@@ -26,7 +27,7 @@ function Addcourse() {
     if (params._id) {
       fetchData(params._id);
     }
-    
+
 
 
   }, []);
@@ -38,6 +39,7 @@ function Addcourse() {
   const [imgPrev, setimgPrev] = useState('');
 
   const handleAddCourse = async (e) => {
+
     e.preventDefault();
     const form = e.target;
 
@@ -51,7 +53,7 @@ function Addcourse() {
         if (response.status !== 200) return alert('something went wrong');
 
         nav('/viewcourse');
-        
+
       }
       catch (error) {
         console.log(error);
@@ -65,7 +67,7 @@ function Addcourse() {
         const response = await axios.post('http://localhost:5500/course/add_course', formData, {});
 
         if (response.status !== 200) return alert('something went wrong');
-  
+
         nav('/viewcourse');
 
       } catch (error) {
@@ -103,7 +105,7 @@ function Addcourse() {
       <div className='flex  bg-[#F5F7FF]'>
         <Sidebar />
 
-        <div className={` ${changemenu == true ? 'w-[95%]' : 'w-[84%]'} relative px-[30px] pt-[20px] pb-[60px]  bg-[#F5F7FF]`}>
+        <div className={` ${changemenu === true ? 'w-[95%]' : 'w-[84%]'} relative px-[30px] pt-[20px] pb-[60px]  bg-[#F5F7FF]`}>
 
           <h1 className='text-[25px] font-[500] mb-[10px]'>
             Courses
@@ -131,8 +133,8 @@ function Addcourse() {
                 </div>
                 Courses Stauts
                 <div className='flex items-center mt-5  mb-8 gap-2'>
-                  <input type="radio" onClick={handleDataUpdate} checked={data.status == 'true'} value={true} name='status' className='mx-2 w-[20px] h-[20px] text-[20px]' /> Active
-                  <input type="radio" onClick={handleDataUpdate} checked={data.status == 'false'} value={false} name='status' className='mx-2 w-[20px] h-[20px] text-[20px]' /> Deactive
+                  <input type="radio" onClick={handleDataUpdate} checked={data.status === 'true'} value={true} name='status' className='mx-2 w-[20px] h-[20px] text-[20px]' /> Active
+                  <input type="radio" onClick={handleDataUpdate} checked={data.status === 'false'} value={false} name='status' className='mx-2 w-[20px] h-[20px] text-[20px]' /> Deactive
                 </div>
 
                 <input type="submit" className='bg-[#4B49AC] mb-8 mt-7 text-[18px] px-8 py-2 rounded-[10px] text-white' />

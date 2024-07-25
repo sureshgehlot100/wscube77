@@ -12,12 +12,16 @@ const registerUser = async (req, res) => {
         if (!req.body.otp) return res.status(401).json({ message: 'please provide a OTP' });
         if (req.body.otp !== SentOtp) return res.status(401).json({ message: 'please provide a valid OTP' });
 
+        const existingUser = await User.findOne({ email: req.body.email });
+        if (existingUser) return res.status(400).json({ message: "user already exists" });
+
+
         const userdata = new User({
             email: req.body.email,
             password: req.body.password
         });
 
-        const response = userdata.save();
+        const response = await userdata.save();
 
         console.log(response)
 
@@ -30,7 +34,9 @@ const registerUser = async (req, res) => {
 
     } catch (error) {
         console.log(error);
-        if (error.code === 11000) return res.status(400).json({ message: 'user already exists' });
+        if (error.code === 11000) {
+            return res.status(400).json({ message: 'user already exists' });
+        }
         res.status(500).json({ message: 'internal server error' });
 
     }

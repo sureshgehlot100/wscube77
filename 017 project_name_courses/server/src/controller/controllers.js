@@ -23,6 +23,7 @@ const readVideo = require('./video/readvideo');
 const searchCourses = require('./courses/searchCourse');
 const generate_otp = require('./otp/generateOTP');
 const registerUser = require('./user/registerUser');
+const reqPayment = require('./payment/reqPayment');
 
 module.exports = {
     registerAdmin,
@@ -49,5 +50,6 @@ module.exports = {
     addVideo,
     readVideo,
     generate_otp,
-    registerUser
+    registerUser,
+    reqPayment
 }

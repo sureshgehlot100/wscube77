@@ -10,14 +10,13 @@ const changeSlidesStatus = async (req, res) => {
             },
             {
                 $set: {
-                    stauts: req.body.status,
+                    stauts: req.body.Status,
                     updated_at: Date.now()
                 }
             }
         );
-        console.log(req.body);
-        res.status(200).json({ message: 'status updated successfully ', data: response });
 
+        res.status(200).json({ message: 'status updated successfully ', data: response });
     }
     catch (err) {
         console.log(err);

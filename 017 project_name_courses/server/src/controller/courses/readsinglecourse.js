@@ -5,6 +5,7 @@ const readSingleCourse = async (req, res) => {
         const response = await Course.findOne(req.params);
 
         response.thumbnail = `${req.protocol}://${req.get('host')}/uploads/${response.thumbnail}`;
+       
         if (!response) return res.status(404).json({ message: 'data not found' });
         res.status(200).json({ message: 'data fetched successfully', data: response });
 

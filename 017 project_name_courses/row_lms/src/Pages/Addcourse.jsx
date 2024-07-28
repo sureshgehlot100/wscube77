@@ -27,9 +27,6 @@ function Addcourse() {
     if (params._id) {
       fetchData(params._id);
     }
-
-
-
   }, []);
 
 
@@ -42,6 +39,7 @@ function Addcourse() {
 
     e.preventDefault();
     const form = e.target;
+    console.log(form);
 
     const formData = new FormData(form);
     console.log(formData)
@@ -65,7 +63,7 @@ function Addcourse() {
 
       try {
         const response = await axios.post('http://localhost:5500/course/add_course', formData, {});
-
+         console.log(response);
         if (response.status !== 200) return alert('something went wrong');
 
         nav('/viewcourse');

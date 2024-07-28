@@ -63,16 +63,16 @@ function Home() {
     <div  className='tabs '>
     <div className='flex gap-5 py-10 justify-center '>
     
-    <div onClick={()=>setTabs("All")} className={`${tab=="All" ?" active":" "} `}>All</div>
-    <div onClick={()=>setTabs("Desgin")} className={` ${tab=="Desgin" ?"active":" "}`}>Desgin</div>
-    <div onClick={()=>setTabs("3D + Animation")} className={` ${tab=="3D + Animation" ?"active":" "}`}>3D + Animation</div>
+    <div onClick={()=>setTabs("All")} className={`${tab==="All" ?" active":" "} `}>All</div>
+    <div onClick={()=>setTabs("Desgin")} className={` ${tab==="Desgin" ?"active":" "}`}>Desgin</div>
+    <div onClick={()=>setTabs("3D + Animation")} className={` ${tab==="3D + Animation" ?"active":" "}`}>3D + Animation</div>
     
     
     </div>
     </div>
     <div className=' grid lg:grid-cols-4 gap-5 '>
     {
-      tab!=""?
+      tab!==""?
       <Tabs tabbing={tab}/>
       :
       ""

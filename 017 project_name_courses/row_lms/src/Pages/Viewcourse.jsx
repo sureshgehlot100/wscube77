@@ -19,17 +19,17 @@ function Viewcourse() {
   const [pagewiseData, SetPageWiseData] = useState([]);
   const [TotalBTN, SetTotalBTN] = useState(null);
   const [allbtns, SetAllbtns] = useState([]);
-  // const [adminData, setadminData] = useState('');
+  const [adminData, setAdminData] = useState('');
 
-  // useEffect(() => {
-  //   const data = JSON.parse(Cookies.get('admin'));
-  //   setadminData(data);
-  // }, []);
+  useEffect(() => {
+    const data = JSON.parse(Cookies.get('admin'));
+    setAdminData(data);
+  }, []);
 
 
   const handlefetchCourse = async () => {
     const data = JSON.parse(Cookies.get('admin'));
-    // setadminData(data);
+    setAdminData(data);
     try {
       const response = await axios.get('http://localhost:5500/course/read_courses',{
         // body:{},
@@ -39,7 +39,7 @@ function Viewcourse() {
       });
       if (response.status !== 200) return alert('something went wrong');
 
-      // setfilePath(response.data.filePath);
+      setfilePath(response.data.filePath);
 
       setcourseData(response.data.data);
 
@@ -124,8 +124,11 @@ function Viewcourse() {
       console.log(response)
 
       if (response.status !== 200) return alert('Something went wrong');
-      SetChecked([]);
-      handlefetchCourse();
+     
+      alert('Course deleted successfully');   
+      SetChecked([]);   
+      handlefetchCourse();  
+          
     } catch (error) {
       console.log(error);
       alert('Something went Wrong');
@@ -150,7 +153,7 @@ function Viewcourse() {
   useEffect(() => {
     const pagedata = courseData.slice((pageNo - 1) * 10, ((pageNo - 1) + 10));
     SetPageWiseData(pagedata);
-  }, [pageNo]);
+  }, [pageNo, courseData]);
   // console.log(pagewiseData)
 
   useEffect(() => {

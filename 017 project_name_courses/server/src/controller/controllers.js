@@ -24,6 +24,7 @@ const searchCourses = require('./courses/searchCourse');
 const generate_otp = require('./otp/generateOTP');
 const registerUser = require('./user/registerUser');
 const reqPayment = require('./payment/reqPayment');
+const trueSlides = require('./slides/trueslides');
 
 module.exports = {
     registerAdmin,
@@ -41,6 +42,7 @@ module.exports = {
     readSlides,
     readSingleslides,
     deleteSingleSlides,
+    trueSlides,
     addTeams ,
     readteams,
     deleteSingleTeams,

@@ -51,7 +51,6 @@ function Viewteam() {
   };
   const handleUpdate = async (e) => {
     nav(`/addteam/${e.target.value}`);
-
   }
 
 

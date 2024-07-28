@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router';
 
 function Viewslider() {
-  const nav = useNavigate() ;
+  const nav = useNavigate();
   let { changemenu } = useContext(mainContext);
   const [slidesData, setSlidesData] = useState([]);
   const [filepath, setfilePath] = useState('');
@@ -15,7 +15,7 @@ function Viewslider() {
   const handlefetchSlides = async (req, res) => {
     try {
       const response = await axios.get('http://localhost:5500/slides/read_slide');
-      console.log(response);
+
       if (response.status !== 200) return alert('something went wrong');
 
       setfilePath(response.data.filePath);
@@ -29,7 +29,6 @@ function Viewslider() {
   };
   useEffect(() => {
     handlefetchSlides();
-
   }, []);
 
   const handlesingleslidesDelete = async (e) => {
@@ -37,11 +36,11 @@ function Viewslider() {
     console.log(e.target.value);
     try {
       const response = await axios.delete(`http://localhost:5500/slides/delete_single_slides/${e.target.value}`);
-      
+
       if (response.status !== 200) return alert('something went wrong');
       alert('slides deleted successfully');
       handlefetchSlides();
-      
+
     } catch (error) {
       console.log(error);
       alert('something went wrong');
@@ -59,9 +58,10 @@ function Viewslider() {
         'Content-Type': 'application/json'
       }
     })
+    console.log(response);
     handlefetchSlides();
   };
-  const handleUpdate = async(e)=>{
+  const handleUpdate = async (e) => {
     nav(`/addslider/${e.target.value}`);
   }
 
@@ -73,7 +73,7 @@ function Viewslider() {
       <div className='flex  bg-[#F5F7FF]'>
         <Sidebar />
 
-        <div className={`${changemenu == true ? 'w-[95%]' : 'w-[84%]'} relative px-[30px] py-[50px] h-[92vh] bg-[#F5F7FF]`}>
+        <div className={`${changemenu === true ? 'w-[95%]' : 'w-[84%]'} relative px-[30px] py-[50px] h-[92vh] bg-[#F5F7FF]`}>
 
           <h1 className='text-[25px] font-[500] mb-[10px]'>
             Slider Table
@@ -101,7 +101,7 @@ function Viewslider() {
                         <td>
                           <img src={filepath + slides.thumbnail} alt="" className='w-[100px]' />
                         </td>
-                        <td><button value={slides._id} onClick={handleStatus} className={`p-[4px_8px] ${((slides.status) ? 'bg-[green]' : 'bg-[red]')} rounded text-[white]`}>{(slides.status) ? 'Active' : 'Inactive'}</button></td>
+                        <td> <button value={slides._id} onClick={handleStatus} className={`p-[4px_8px] ${((slides.status) ? 'bg-[green]' : 'bg-[red]')} rounded text-[white]`}>{(slides.status) ? 'Active' : 'Inactive'}</button></td>
                         <td className='text-center'>
                           <button value={slides._id} onClick={handleUpdate} className='bg-green-500 text-white px-5 mr-5 py-1'>Edit</button>
                           <button value={slides._id} onClick={handlesingleslidesDelete} className='bg-red-400 text-white px-5 py-1'>Delete</button>

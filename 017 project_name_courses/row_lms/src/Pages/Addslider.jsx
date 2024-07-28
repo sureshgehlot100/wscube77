@@ -17,7 +17,7 @@ function Addslider() {
   const fetchData = async (id) => {
     const response = await axios.get(`http://localhost:5500/slides/fetch_slides_with_id/${id}`);
     const oldData = (response.data.data);
-    console.log(oldData);
+    // console.log(oldData);
     oldData.status = oldData.status.toString();
     setData(oldData);
   };
@@ -31,8 +31,10 @@ function Addslider() {
   const handleAddSlides = async (e) => {
     e.preventDefault();
     const form = e.target;
+    console.log(form);
 
     const formData = new FormData(form);
+    console.log(formData);
 
     if (params._id) {
       try {
@@ -86,7 +88,7 @@ function Addslider() {
       <div className='flex  bg-[#F5F7FF]'>
         <Sidebar />
 
-        <div className={` ${changemenu == true ? 'w-[95%]' : 'w-[84%]'} relative px-[30px] pt-[20px] pb-[60px]  bg-[#F5F7FF]`}>
+        <div className={` ${changemenu === true ? 'w-[95%]' : 'w-[84%]'} relative px-[30px] pt-[20px] pb-[60px]  bg-[#F5F7FF]`}>
 
           <h1 className='text-[25px] font-[500] mb-[10px]'>
             Slider
@@ -113,8 +115,8 @@ function Addslider() {
                 <textarea onChange={handleDataUpdate} value={data.slidesdes} name="slidesdes" id="" className='border px-4 pt-3 border-gray-400 my-2 w-full h-[100px]' cols="30" rows="10"></textarea>
                 Slider Stauts
                 <div className='flex items-center mt-5  mb-8 gap-2'>
-                  <input type="radio" onClick={handleDataUpdate} checked={data.status == 'true'} value={true} name='status' className='mx-2 w-[20px] h-[20px] text-[20px]' /> Active
-                  <input type="radio" onClick={handleDataUpdate} checked={data.status == 'false'} value={false} name='status' className='mx-2 w-[20px] h-[20px] text-[20px]' /> Deactive
+                  <input type="radio" onClick={handleDataUpdate} checked={data.status === 'true'} value={true} name='status' className='mx-2 w-[20px] h-[20px] text-[20px]' /> Active
+                  <input type="radio" onClick={handleDataUpdate} checked={data.status === 'false'} value={false} name='status' className='mx-2 w-[20px] h-[20px] text-[20px]' /> Deactive
                 </div>
 
                 <input type="submit" className='bg-[#4B49AC] mb-8 mt-7 text-[18px] px-8 py-2 rounded-[10px] text-white' />

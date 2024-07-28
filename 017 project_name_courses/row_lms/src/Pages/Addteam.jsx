@@ -12,12 +12,12 @@ function Addteam() {
   const params = useParams();
   let { changemenu } = useContext(mainContext);
 
-  const fetchData = async(id)=>{
-   
-      const response = await axios.get(`http://localhost:5500/teams/fetch_data_with_id/${id}`);
-      console.log(response);
-      
-   
+  const fetchData = async (id) => {
+
+    const response = await axios.get(`http://localhost:5500/teams/fetch_team_with_id/${id}`);
+    console.log(response);
+
+
   };
   useEffect(() => {
     if (params._id) {
@@ -33,10 +33,10 @@ function Addteam() {
     const formData = new FormData(form);
     console.log(formData);
     try {
-      const response = axios.post('http://localhost:5500/teams/add_teams',formData,{});
+      const response = await axios.post('http://localhost:5500/teams/add_teams', formData, {});
 
-      // if (response.status !== 200) return alert('something went wrong');
-  
+      if (response.status !== 200) return alert('something went wrong');
+
       nav('/viewteam');
 
     } catch (error) {
@@ -55,7 +55,7 @@ function Addteam() {
       <div className='flex  bg-[#F5F7FF]'>
         <Sidebar />
 
-        <div className={` ${changemenu == true ? 'w-[95%]' : 'w-[84%]'} relative px-[30px] pt-[20px] pb-[60px]  bg-[#F5F7FF]`}>
+        <div className={` ${changemenu === true ? 'w-[95%]' : 'w-[84%]'} relative px-[30px] pt-[20px] pb-[60px]  bg-[#F5F7FF]`}>
 
           <h1 className='text-[25px] font-[500] mb-[10px]'>
             Team

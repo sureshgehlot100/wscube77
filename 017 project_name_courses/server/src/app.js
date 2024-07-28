@@ -14,7 +14,7 @@ require('./db/config');
 
 const allRoutes = express.Router();
 const verifyRoutes = express.Router();
-verifyRoutes.use(verifyJWT);
+// verifyRoutes.use(verifyJWT);
 
 allRoutes.use('/admin', adminRoutes);
 // verifyRoutes.use('/course', courseRoutes);
@@ -26,6 +26,6 @@ allRoutes.use('/otp', otpRouter);
 allRoutes.use('/user', userRoutes);
 allRoutes.use('/payment',paymentRoutes);
 
-allRoutes.use('/',verifyRoutes);
+// allRoutes.use('/',verifyRoutes);
 
 module.exports = allRoutes;

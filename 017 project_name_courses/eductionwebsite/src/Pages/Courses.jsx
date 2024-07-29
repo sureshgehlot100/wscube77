@@ -8,14 +8,13 @@ import axios from 'axios'
 import { Card, CardHeader, CardBody, CardFooter, Typography, Button, } from "@material-tailwind/react";
 import ReactPaginate from 'react-paginate';
 
-function Courses({ handleAddToCart }) {
+function Courses() {
   let [catelog, setcatelog] = useState('')
   let [search, setsearch] = useState('')
   let [faq, setFaq] = useState(false);
 
   const [courseData, setcourseData] = useState([]);
   const [filePath, setfilePath] = useState('');
-  
 
 
   const getCourses = async (req, res) => {
@@ -32,10 +31,23 @@ function Courses({ handleAddToCart }) {
   const handleBuyCourse = async (e) => {
 
     const courseDetails = courseData.filter((item) => item._id === e.target.value);
-   console.log(courseDetails);
+    console.log(courseDetails)
+    try {
+      const response = await axios.post('http://localhost:5500/payment/req-payment', {
+        data: {
+          items: JSON.stringify(courseDetails)
+        },
+        headers: {}
+      });
+      console.log(response);
+    } catch (error) {
+      console.log(error)
 
-  }
-  
+    }
+
+  };
+
+
   const [pageNumber, setPageNumber] = useState(0);
 
   const coursesPerPage = 6;
@@ -84,7 +96,8 @@ function Courses({ handleAddToCart }) {
 
     setcatelog("All")
 
-  }, [])
+  }, []);
+
 
 
   return (

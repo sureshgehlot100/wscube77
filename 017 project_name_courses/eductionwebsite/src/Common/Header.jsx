@@ -8,7 +8,6 @@ function Header() {
     let [menu, setmenu] = useState(false);
   
 
-
     function setstickheader() {
         if (window.scrollY >= 100) {
             setstick(true)
@@ -20,7 +19,7 @@ function Header() {
 
     window.addEventListener("scroll", setstickheader);
 
-    console.log(stick)
+    // console.log(stick)
 
     return (
         <>
@@ -42,7 +41,7 @@ function Header() {
                         </div>
 
 
-                        <div className={`  lg:bg-transparent text-white ${menu === true ? ' bg-black left-0' : 'left-[-100%]'} duration-500  text-white absolute lg:static top-[63px]  w-[80%] lg:w-auto h-[100%]   max-h-[100vh]   z-[999999]`} id="mobile-menu-2">
+                        <div className={`lg:bg-transparent text-white ${menu === true ? ' bg-black left-0' : 'left-[-100%]'} duration-500  text-white absolute lg:static top-[63px]  w-[80%] lg:w-auto h-[100%]   max-h-[100vh]   z-[999999]`} id="mobile-menu-2">
                             {
                                 menu === true ?
                                     <ul className={`flex flex-col gap-[30px] mt-8 font-[400] text-white  font-['Poppins'] lg:flex-row lg:space-x-8 lg:mt-0 text-[18px] `}>
@@ -80,13 +79,8 @@ function Header() {
                                             <Link to={'/contact'} className="block py-2 pr-4 pl-[50px]   border-gray-100  lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0  dark:hover:bg-gray-700  lg:dark:hover:bg-transparent dark:border-gray-700">Contact</Link>
                                         </li>
                                     </ul>
-
-
                             }
-
                         </div>
-
-
                     </div>
                 </nav>
             </header>

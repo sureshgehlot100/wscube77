@@ -31,7 +31,6 @@ function Viewteam() {
   };
   useEffect(() => {
     handlefetchedTeams();
-
   }, []);
   const handleSigleteamsdelete = async (e) => {
     if (!window.confirm('Are you sure to delete')) return;
@@ -40,7 +39,7 @@ function Viewteam() {
       const response = await axios.delete(`http://localhost:5500/teams/delete_single_teams/${e.target.value}`);
 
       if (response.status !== 200) return alert('something went wrong');
-      alert('slides deleted successfully');
+      alert('Teams deleted successfully');
       handlefetchedTeams();
 
     } catch (error) {
@@ -64,7 +63,7 @@ function Viewteam() {
       <div className='flex  bg-[#F5F7FF]'>
         <Sidebar />
 
-        <div className={` ${changemenu == true ? 'w-[95%]' : 'w-[84%]'} relative px-[30px] py-[50px] h-[92vh] bg-[#F5F7FF]`}>
+        <div className={` ${changemenu === true ? 'w-[95%]' : 'w-[84%]'} relative px-[30px] py-[50px] h-[92vh] bg-[#F5F7FF]`}>
 
           <h1 className='text-[25px] font-[500] mb-[10px]'>
             Team Table
@@ -75,9 +74,9 @@ function Viewteam() {
                 <tr>
                   <th>S.no</th>
                   <th>Member Name</th>
-                  <th>Category</th>
+                  <th>Subject</th>
                   <th>Member Image</th>
-                  <th>Status</th>
+                  {/* <th>Status</th> */}
                   <th>Action</th>
                 </tr>
                 {
@@ -86,9 +85,9 @@ function Viewteam() {
                       <tr>
                         <td>{i + 1}</td>
                         <td>{teams.teamsmembername}</td>
-                        <td>{teams.teamsCat}</td>
+                        <td>{teams.teamsSubject}</td>
                         <td> <img src={filepath + teams.thumbnail} alt="" className='w-[100px]' /></td>
-                        <td>{i + 1}</td>
+                        {/* <td>{i + 1}</td> */}
                         <td className='text-center'>
                           <button value={teams._id} onClick={handleUpdate} className='bg-green-500 text-white px-5 mr-5 py-1'>Edit</button>
                           <button value={teams._id} className='bg-red-400 text-white px-5 py-1' onClick={handleSigleteamsdelete}>Delete</button>

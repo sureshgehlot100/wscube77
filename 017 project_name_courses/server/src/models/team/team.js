@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const addTeamSchema = new mongoose.Schema({
     teamsmembername: String,
-    teamsCat: String,
+    teamsSubject: String,
     thumbnail: String,
     status: {
         type: Boolean,

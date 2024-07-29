@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { mainContext } from '../Context';
 import Header from '../Common/Header';
 import Sidebar from '../Common/Sidebar';
@@ -11,13 +11,16 @@ function Addteam() {
   const nav = useNavigate();
   const params = useParams();
   let { changemenu } = useContext(mainContext);
+  const [data, setData] = useState({})
 
   const fetchData = async (id) => {
 
     const response = await axios.get(`http://localhost:5500/teams/fetch_team_with_id/${id}`);
-    console.log(response);
 
-
+    const oldData = (response.data.data);
+    console.log(oldData);
+    setData(oldData);
+   
   };
   useEffect(() => {
     if (params._id) {
@@ -32,20 +35,43 @@ function Addteam() {
     const form = e.target;
     const formData = new FormData(form);
     console.log(formData);
-    try {
-      const response = await axios.post('http://localhost:5500/teams/add_teams', formData, {});
+    if (params._id) {
+      try {
+        const response = await axios.post(`http://localhost:5500/teams/update_team/${params._id}`, formData);
+        console.log(response);
+        if (response.status !== 200) return alert('something went wrong');
 
-      if (response.status !== 200) return alert('something went wrong');
+        nav('/viewteam');
 
-      nav('/viewteam');
+      }
 
-    } catch (error) {
+      catch (error) {
+        console.log(error);
+        alert('something went wrong');
 
-      console.log(error);
-      alert('somethings wents wrong');
+      }
 
     }
+    else {
+      try {
+        const response = await axios.post('http://localhost:5500/teams/add_teams', formData, {});
 
+        if (response.status !== 200) return alert('something went wrong');
+
+        nav('/viewteam');
+
+      } catch (error) {
+
+        console.log(error);
+        alert('somethings wents wrong');
+
+      }
+    }
+  };
+  const handleDataUpdate = (e) => {
+    const olddata = { ...data };
+    olddata[e.target.name] = e.target.value;
+    setData(olddata);
   }
   return (
     <div>
@@ -64,11 +90,11 @@ function Addteam() {
             <div className='bg-white w-[100%] mb-[50px] p-4 h-full rounded-[20px] '>
               <form action="" onSubmit={handleaddTeam}>
                 Team Member Name
-                <input type="text" name='teamsmembername' className='border border-gray-400 px-4 w-full h-[50px] mb-3 mt-2 ' />
-                Category
-                <input type="text" name='teamsCat' className='border border-gray-400 w-full h-[50px] mb-3 mt-2 px-4 ' />
+                <input type="text" onChange={handleDataUpdate} name='teamsmembername' className='border border-gray-400 px-4 w-full h-[50px] mb-3 mt-2 ' />
+                Subject
+                <input type="text" onChange={handleDataUpdate} name='teamsSubject' className='border border-gray-400 w-full h-[50px] mb-3 mt-2 px-4 ' />
                 Member Image
-                <input type="file" name='thumbnail' id='file-input' className='border hidden border-gray-400 w-full h-[50px] mb-3 mt-2 ' />
+                <input type="file" onChange={handleDataUpdate} name='thumbnail' id='file-input' className='border hidden border-gray-400 w-full h-[50px] mb-3 mt-2 ' />
                 <div className='flex items-center gap-0 mt-[80px]'>
                   <div className='w-full flex items-center'>
                     <input type="text" readOnly placeholder='Upload File' className=' px-4 rounded-[10px_0px_0px_10px] border border-gray-400 w-[70%] h-[50px]' />

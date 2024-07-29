@@ -25,6 +25,8 @@ const generate_otp = require('./otp/generateOTP');
 const registerUser = require('./user/registerUser');
 const reqPayment = require('./payment/reqPayment');
 const trueSlides = require('./slides/trueslides');
+const fetchUser = require('./user/readUser');
+const updateTeam = require('./teams/updateTeam');
 
 module.exports = {
     registerAdmin,
@@ -44,6 +46,7 @@ module.exports = {
     deleteSingleSlides,
     trueSlides,
     addTeams ,
+    updateTeam,
     readteams,
     deleteSingleTeams,
     updateSlides,
@@ -53,5 +56,6 @@ module.exports = {
     readVideo,
     generate_otp,
     registerUser,
+    fetchUser,
     reqPayment
 }

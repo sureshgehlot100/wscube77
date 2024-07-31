@@ -7,6 +7,8 @@ import Header from '../Common/Header'
 import axios from 'axios'
 import { Card, CardHeader, CardBody, CardFooter, Typography, Button, } from "@material-tailwind/react";
 import ReactPaginate from 'react-paginate';
+import { CartContext } from './CartContext'
+import { useContext } from 'react'
 
 function Courses() {
   let [catelog, setcatelog] = useState('')
@@ -15,35 +17,58 @@ function Courses() {
 
   const [courseData, setcourseData] = useState([]);
   const [filePath, setfilePath] = useState('');
-
+  const { cartItems, setCartItems } = useContext(CartContext);
 
   const getCourses = async (req, res) => {
-    const response = await axios.get('http://localhost:5500/course/true_courses');
-    setcourseData(response.data.data);
-    setfilePath(response.data.filePath);
-    // console.log(response.data.data);
+    try {
+      const response = await axios.get('http://localhost:5500/course/true_courses');
+      setcourseData(response.data.data);
+      setfilePath(response.data.filePath);
+    } catch (error) {
+      console.error(error);
+    }
   };
   useEffect(() => {
     getCourses();
   }, []);
 
 
-  const handleBuyCourse = async (e) => {
+  const handleAddToCart = async (e) => {
 
     const courseDetails = courseData.filter((item) => item._id === e.target.value);
-    console.log(courseDetails)
-    try {
-      const response = await axios.post('http://localhost:5500/payment/req-payment', {
-        data: {
-          items: JSON.stringify(courseDetails)
-        },
-        headers: {}
-      });
-      console.log(response);
-    } catch (error) {
-      console.log(error)
 
+    if (courseDetails.length === 0) {
+      console.error('Course not found');
+      return;
     }
+    const PrdctObj = {
+      id: courseDetails[0]._id,
+      name: courseDetails[0].coursename,
+      price: courseDetails[0].courseprice,
+      image: courseDetails[0].thumbnail,
+      quantity: 1,
+    }
+    const existingItem = cartItems.find((item) => item.id === PrdctObj.id);
+    if (existingItem) {
+      // If the item already exists in the cart, increment its quantity
+      existingItem.quantity++;
+    } else {
+      // If the item doesn't exist in the cart, add it
+      setCartItems([...cartItems, PrdctObj]);
+    }
+
+    // try {
+    //   const response = await axios.post('http://localhost:5500/payment/req-payment', {
+    //     data: {
+    //       items: JSON.stringify(courseDetails)
+    //     },
+    //     headers: {}
+    //   });
+    //   console.log(response);
+    // } catch (error) {
+    //   console.log(error)
+
+    // }
 
   };
 
@@ -71,15 +96,15 @@ function Courses() {
             <Typography variant="h5" color="blue-gray" className="mb-2">
               {course.courseprice}
             </Typography>
-            <Typography>
-              {course.courseuration}
+            <Typography variant="h5" color="blue-gray" className="mb-2">
+             Duration: {course.courseduration}
             </Typography>
-            <Typography>
-              {course.coursedes}
+            <Typography variant="h6" color="blue-gray" className="mb-2">
+             Description: {course.coursedes}
             </Typography>
           </CardBody>
           <CardFooter className="pt-0">
-            <Button onClick={handleBuyCourse} value={course._id} className='p-[10px_20px] bg-[blue] block'>Buy</Button>
+            <Button onClick={handleAddToCart} value={course._id} className='p-[10px_20px] bg-[blue] block'>Add To Cart</Button>
           </CardFooter>
         </Card>
 
@@ -89,6 +114,10 @@ function Courses() {
   const pageCount = Math.ceil(courseData.length / coursesPerPage);
 
   const changePage = ({ selected }) => {
+    if (selected < 0 || selected >= pageCount) {
+      console.error('Invalid page number');
+      return;
+    }
     setPageNumber(selected);
   };
 
@@ -102,7 +131,7 @@ function Courses() {
 
   return (
     <>
-      <Header/>
+      <Header />
       <TitleSection title={"Courses"} />
       <div className='max-w-[1300px] m-auto   mt-4 py-5'>
         <div className='grid grid-cols-[73%_auto] gap-4'>

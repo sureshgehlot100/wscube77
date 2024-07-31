@@ -60,23 +60,17 @@ function Addcourse() {
 
     }
     else {
-
       try {
         const response = await axios.post('http://localhost:5500/course/add_course', formData, {});
          console.log(response);
         if (response.status !== 200) return alert('something went wrong');
-
         nav('/viewcourse');
-
-      } catch (error) {
+      } 
+      catch (error) {
         console.log(error);
         alert('something went wrong');
-
       }
     }
-
-
-
   };
   const handleImgprev = (e) => {
     const reader = new FileReader();

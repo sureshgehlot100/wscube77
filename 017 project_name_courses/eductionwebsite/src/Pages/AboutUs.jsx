@@ -48,12 +48,12 @@ function AboutUs() {
           <div className='grid  py-10 grid-cols-2 font-["Nunito"] gap-[30px]'>
             <div className='shadow-[0px_0px_10px_1px_rgba(0,0,0,0.2)] px-5 py-3'>
               <h1 className='font-[500] pb-6 text-[24px]'>Who We Are</h1>
-              <p className='pb-6 text-[15.5px] leading-[30px] text-gray-500 pb-5'>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis,et quasi architecto beatae vitae dicta sunt explicabo.</p>
+              <p className='pb-6 text-[15.5px] leading-[30px] text-gray-500 '>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis,et quasi architecto beatae vitae dicta sunt explicabo.</p>
               <p className='text-[15.5px] leading-[30px] text-gray-500 pb-5'>Nemo enim ipsam,voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia,consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.,Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, adipisci velit, sed quia non numquam eius modi tempora</p>
             </div>
             <div className='shadow-[0px_0px_10px_1px_rgba(0,0,0,0.2)] px-5 py-3'>
               <h1 className='font-[500] pb-6 text-[24px]'>What We Do</h1>
-              <p className='pb-6 text-[15.5px] leading-[30px] text-gray-500 pb-5'>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis,et quasi architecto beatae vitae dicta sunt explicabo.</p>
+              <p className='pb-6 text-[15.5px] leading-[30px] text-gray-500 '>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis,et quasi architecto beatae vitae dicta sunt explicabo.</p>
               <p className='text-[15.5px] leading-[30px] text-gray-500 pb-5'>Nemo enim ipsam,voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia,consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt.,Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, adipisci velit, sed quia non numquam eius modi tempora</p>
             </div>
           </div>

@@ -7,7 +7,7 @@ import { CartContext } from '../Pages/CartContext';
 function Header() {
     let [stick, setstick] = useState(false);
     let [menu, setmenu] = useState(false);
-    const { cartItems, setCartItems } = useContext(CartContext);
+    const { cartItems } = useContext(CartContext);
 
 
     function setstickheader() {

@@ -16,7 +16,7 @@ function Header() {
   const IfAdminLoggedIn = () => {
     const ifAdmin = Cookies.get('admin');
 
-    // console.log(ifAdmin );
+    console.log(ifAdmin );
     if (!ifAdmin) {
 
       nav('/');

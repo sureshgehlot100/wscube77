@@ -1,29 +1,43 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Footer from '../Common/Footer'
 import HeaderTwo from '../Common/HeaderTwo'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
-import Cookies from 'js-cookie';
 
 function Login() {
     const nav = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
+    const [userData, setuserData] = useState([]);
 
+
+
+
+    const getUser = async (req, res) => {
+
+        try {
+            const response = await axios.get('http://localhost:5500/user/read_user');
+            setuserData(response.data.data);
+            // console.log(response);
+        }
+        catch (error) {
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+        getUser();
+    }, []);
     const handleLogin = (e) => {
-        e.preventDefault();
-        const storedEmail = Cookies.get('email');
-        const storedPassword = Cookies.get('password');
-        console.log(storedEmail,storedPassword);
-
-        if (email === storedEmail && password === storedPassword) {
-            nav('/home'); 
+        e.preventDefault();      
+       const user = userData.find((user) => user.email === email && user.password === password);
+        if (user) {
+            nav('/');
         } else {
             setError('Invalid email or password');
         }
-    };
+    }
     return (
         <>
             <HeaderTwo />

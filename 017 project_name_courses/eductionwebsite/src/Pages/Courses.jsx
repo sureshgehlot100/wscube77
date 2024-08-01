@@ -52,9 +52,11 @@ function Courses() {
     if (existingItem) {
       // If the item already exists in the cart, increment its quantity
       existingItem.quantity++;
+      alert('course added in cart');
     } else {
       // If the item doesn't exist in the cart, add it
       setCartItems([...cartItems, PrdctObj]);
+      alert('course added in cart');
     }
 
   };

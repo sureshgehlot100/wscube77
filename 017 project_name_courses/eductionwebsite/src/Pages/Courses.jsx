@@ -57,19 +57,6 @@ function Courses() {
       setCartItems([...cartItems, PrdctObj]);
     }
 
-    // try {
-    //   const response = await axios.post('http://localhost:5500/payment/req-payment', {
-    //     data: {
-    //       items: JSON.stringify(courseDetails)
-    //     },
-    //     headers: {}
-    //   });
-    //   console.log(response);
-    // } catch (error) {
-    //   console.log(error)
-
-    // }
-
   };
 
 

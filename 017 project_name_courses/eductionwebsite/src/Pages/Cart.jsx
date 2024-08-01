@@ -1,8 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { CartContext } from './CartContext';
-import Header from '../Common/Header';
 import HeaderTwo from '../Common/HeaderTwo';
 import { useEffect } from 'react';
+import axios from 'axios';
 
 export default function Cart() {
     const { cartItems, setCartItems } = useContext(CartContext);
@@ -20,7 +20,7 @@ export default function Cart() {
 
     }, [cartItems]);
     const handleApplyPromo = () => {
-        if (promoCode === 'Suroo') {
+        if (promoCode === 'Suresh') {
             setDiscount(total * 0.2); // 20% discount
         } else {
             setDiscount(0);
@@ -40,6 +40,21 @@ export default function Cart() {
         });
         setCartItems(newCartItems);
     };
+    const handlwBuyCourse = async(e)=>{
+        const courseDetails = cartItems.filter((item) => item._id === e.target.value);
+        try {
+              const response = await axios.post('http://localhost:5500/payment/req-payment', {
+                data: {
+                  items: JSON.stringify(courseDetails)
+                },
+                headers: {}
+              });
+              console.log(response);
+            } catch (error) {
+              console.log(error)
+        
+            }
+    }
 
     return (
         <>
@@ -85,15 +100,15 @@ export default function Cart() {
                             </div>
                             <div class="py-10">
                                 <label for="promo" class="font-semibold inline-block mb-3 text-sm uppercase">Promo Code</label>
-                                <input type="text" id="promo" value={promoCode} placeholder="Enter your code" class="p-2 text-sm w-full" onChange={(e) => setPromoCode(e.target.value)} />
-                                <button class="bg-red-500 hover:bg-red-600 px-5 py-3 text-sm text-white uppercase" onClick={handleApplyPromo}>Apply</button>
+                                <input type="text" id="promo" value={promoCode} placeholder="Enter your code = Suresh" class="p-2 text-sm w-full" onChange={(e) => setPromoCode(e.target.value)} />
+                                <button class="bg-red-500 hover:bg-red-600 px-5 py-3 m-1 rounded-sm text-sm text-white uppercase" onClick={handleApplyPromo}>Apply</button>
                             </div>
                             <div class="border-t mt-8">
                                 <div class="flex font-semibold justify-between py-6 text-sm uppercase">
                                     <span>Total cost</span>
                                     <span>Rs {(total - discount) + (total * 10 / 100)} /-</span>
                                 </div>
-                                <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+                                <button class="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full" onClick={handlwBuyCourse}>Checkout</button>
                             </div>
                         </div>
                     </div>
@@ -114,7 +129,7 @@ function CartRow({ item, index, handleRemoveItem, handleQuantityChange }) {
                 <div class="flex flex-col justify-between ml-4 flex-grow">
                     <span class="font-bold text-sm">Course</span>
                     <span class="text-red-500 text-xs">{item.name}</span>
-                    <a class="font-semibold hover:text-red-500 text-gray-500 text-xs" onClick={() => handleRemoveItem(index)}>Remove</a>
+                    <a href="#" class="font-semibold hover:text-red-500 text-gray-500 text-xs" onClick={() => handleRemoveItem(index)}>Remove</a>
                 </div>
             </div>
             <div class="flex justify-center w-1/5">

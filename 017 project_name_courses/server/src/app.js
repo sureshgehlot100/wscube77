@@ -14,11 +14,11 @@ require('./db/config');
 
 const allRoutes = express.Router();
 const verifyRoutes = express.Router();
-// verifyRoutes.use(verifyJWT);
+verifyRoutes.use(verifyJWT);
 
 allRoutes.use('/admin', adminRoutes);
-// verifyRoutes.use('/course', courseRoutes);
-allRoutes.use('/course', courseRoutes);
+verifyRoutes.use('/course', courseRoutes);
+// allRoutes.use('/course', courseRoutes);
 allRoutes.use('/slides', slidesRoutes);
 allRoutes.use('/teams', TeamsRoutes);
 allRoutes.use('/videos', videoRoutes);
@@ -26,6 +26,6 @@ allRoutes.use('/otp', otpRouter);
 allRoutes.use('/user', userRoutes);
 allRoutes.use('/payment',paymentRoutes);
 
-// allRoutes.use('/',verifyRoutes);
+allRoutes.use('/',verifyRoutes);
 
 module.exports = allRoutes;

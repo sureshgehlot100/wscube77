@@ -100,6 +100,7 @@ function Register() {
             if (response.status === 400) return alert(response.data.data.message);
 
             Cookies.set('use-data', response.data.data, { expires: 7 });
+            // Cookies.set('email', data.email, { expires: 7 });
 
             alert('user registred successfully');
             

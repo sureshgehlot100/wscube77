@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
+import { CartContext } from '../Pages/CartContext';
 
 
 function Header() {
     let [stick, setstick] = useState(false);
     let [menu, setmenu] = useState(false);
-  
+    const { cartItems, setCartItems } = useContext(CartContext);
+
 
     function setstickheader() {
         if (window.scrollY >= 100) {
@@ -78,8 +80,9 @@ function Header() {
                                         <li>
                                             <Link to={'/contact'} className="block py-2 pr-4 pl-[50px]   border-gray-100  lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0  dark:hover:bg-gray-700  lg:dark:hover:bg-transparent dark:border-gray-700">Contact</Link>
                                         </li>
-                                        <Link to={'/Cart'} className="block py-2 pr-4 pl-[50px]   border-gray-100  lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0  dark:hover:bg-gray-700  lg:dark:hover:bg-transparent dark:border-gray-700">Cart</Link>
-
+                                        <li>
+                                            <Link to={'/Cart'} className="    rounded-lg text-[18px] font-['Poppins]  px-4 lg:px-5 py-2 lg:py-2.5 mr-2"> Cart ({cartItems.length})</Link>
+                                        </li>
                                     </ul>
                             }
                         </div>

@@ -19,7 +19,7 @@ function Login() {
         console.log(storedEmail,storedPassword);
 
         if (email === storedEmail && password === storedPassword) {
-            nav('/home'); // navigate to home page if credentials match
+            nav('/home'); 
         } else {
             setError('Invalid email or password');
         }

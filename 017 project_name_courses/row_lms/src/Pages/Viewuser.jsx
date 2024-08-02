@@ -22,6 +22,24 @@ function Viewuser() {
   useEffect(() => {
     getUser();
   }, []);
+  const handleDeleteUser = async (e) => {
+    if (!window.confirm('Are you sure to delete')) return;
+    
+    try {
+      const response = await axios.delete(`http://localhost:5500/user/delete_user/${e.target.value}`);
+      
+      if (response.status !== 200) return alert('something went wrong');
+      alert('user deleted successfully');
+      getUser();
+
+    } catch (error) {
+      console.log(error)
+      alert('sometihng went wrong')
+
+    }
+
+
+  }
 
 
   return (
@@ -54,10 +72,11 @@ function Viewuser() {
                         <td>{user.password}</td>
                         <td className='text-center'>
                           <button className='bg-green-500 text-white px-5 mr-5 py-1'>Edit</button>
-                          <button className='bg-red-400 text-white px-5 py-1'>Delete</button>
+                          <button className='bg-red-400 text-white px-5 py-1' value={user._id} onClick={handleDeleteUser}>Delete</button>
                         </td>
                       </tr>
-                    )})
+                    )
+                  })
                 }
 
               </table>

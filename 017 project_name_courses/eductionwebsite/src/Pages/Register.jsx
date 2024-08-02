@@ -95,20 +95,34 @@ function Register() {
 
         try {
             const response = await axios.post('http://localhost:5500/user/register_user', data);
-
+             
             if (response.status !== 200) return alert('something went wrong');
             if (response.status === 400) return alert(response.data.data.message);
+            if (response.status === 401) return alert(response.data.data.message);
 
             Cookies.set('use-data', response.data.data, { expires: 7 });
-            // Cookies.set('email', data.email, { expires: 7 });
 
             alert('user registred successfully');
             
             nav('/');
 
         } catch (error) {
-            console.log(error);
-            alert('something went wrong')
+            if (error.response) {
+                const { status } = error.response;
+                if (status === 400 || status === 401) {
+                  // handle 400 or 401 error specifically
+                  console.log(`Error ${status}: ${error.response.data.message}`);
+                  alert(`Error ${status}: ${error.response.data.message}`);
+                } else {
+                  // handle other errors
+                  console.log(error);
+                  alert('Something went wrong');
+                }
+              } else {
+                // handle non-response errors (e.g. network errors)
+                console.log(error);
+                alert('Something went wrong');
+              }
 
         }
 

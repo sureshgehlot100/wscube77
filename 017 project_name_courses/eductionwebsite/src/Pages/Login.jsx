@@ -4,6 +4,7 @@ import Footer from '../Common/Footer'
 import HeaderTwo from '../Common/HeaderTwo'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import Cookies from 'js-cookie';
 
 function Login() {
     const nav = useNavigate();
@@ -11,8 +12,6 @@ function Login() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [userData, setuserData] = useState([]);
-
-
 
 
     const getUser = async (req, res) => {
@@ -30,10 +29,13 @@ function Login() {
         getUser();
     }, []);
     const handleLogin = (e) => {
-        e.preventDefault();      
-       const user = userData.find((user) => user.email === email && user.password === password);
+        e.preventDefault();
+        const user = userData.find((user) => user.email === email && user.password === password);
         if (user) {
+            Cookies.set('use-data', user);
+            alert('login successfully');
             nav('/');
+
         } else {
             setError('Invalid email or password');
         }

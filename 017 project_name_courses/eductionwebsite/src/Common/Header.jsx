@@ -2,13 +2,26 @@ import React, { useContext, useEffect, useState } from 'react'
 import $ from 'jquery';
 import { Link } from 'react-router-dom';
 import { CartContext } from '../Pages/CartContext';
+import Cookies from 'js-cookie';
 
 
 function Header() {
     let [stick, setstick] = useState(false);
     let [menu, setmenu] = useState(false);
     const { cartItems } = useContext(CartContext);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
 
+    useEffect(() => {
+        const token = Cookies.get('use-data'); 
+        console.log(token)
+        if (token) {
+            setIsLoggedIn(true);
+        }
+    }, []);
+    const handleLogout = () => {
+        Cookies.remove('use-data'); 
+        setIsLoggedIn(false);
+    };
 
     function setstickheader() {
         if (window.scrollY >= 100) {
@@ -33,8 +46,14 @@ function Header() {
                             <span className="self-center text-xl font-semibold whitespace-nowrap ">LOGO</span>
                         </a>
                         <div className={`flex items-center lg:order-2 font-[400] ${stick === true ? "text-black" : "text-white"} `}>
-                            <Link to={'/login'} className="    rounded-lg text-[18px] font-['Poppins]  px-4 lg:px-5 py-2 lg:py-2.5 mr-2   ">Log in</Link>
-                            <Link to={'/register'} className="    rounded-lg text-[18px] font-['Poppins]  px-4 lg:px-5 py-2 lg:py-2.5 mr-2   ">Register</Link>
+                            {isLoggedIn ? (
+                                <button onClick={handleLogout} className="    rounded-lg text-[18px] font-['Poppins]  px-4 lg:px-5 py-2 lg:py-2.5 mr-2   ">Logout</button>
+                            ) : (
+                                <>
+                                    <Link to={'/login'} className="    rounded-lg text-[18px] font-['Poppins]  px-4 lg:px-5 py-2 lg:py-2.5 mr-2   ">Log in</Link>
+                                    <Link to={'/register'} className="    rounded-lg text-[18px] font-['Poppins]  px-4 lg:px-5 py-2 lg:py-2.5 mr-2   ">Register</Link>
+                                </>
+                            )}
                             <button onClick={() => setmenu(!menu)} type="button" className="inline-flex items-center p-2 ml-1 text-sm text-gray-500 rounded-lg lg:hidden  " >
                                 <span className="sr-only">Open main menu</span>
                                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>

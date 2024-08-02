@@ -5,7 +5,7 @@ let ifRegistred = false;
 
 const registerAdmin = async () => {
 
-    if(ifRegistred)return;
+    if (ifRegistred) return;
 
     const ifAdmin = await Admin.find();
     if (ifAdmin.length !== 0) return console.log(ifAdmin[0]);
@@ -21,7 +21,7 @@ const registerAdmin = async () => {
     const response = await adminData.save();
 
     console.log(response);
-    
+
     ifRegistred = true;
 };
 module.exports = registerAdmin;

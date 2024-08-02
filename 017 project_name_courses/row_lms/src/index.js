@@ -44,7 +44,7 @@ const router = createBrowserRouter([
     element:<Addteam/>
   },
   {
-    path:"viewuser",
+    path:"viewuser/:_id?",
     element:<Viewuser/>
   },
   {
